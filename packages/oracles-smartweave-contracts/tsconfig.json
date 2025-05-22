@@ -1,8 +1,0 @@
-{
-  "extends": "../../tsconfig-common.json",
-  "include": [
-    "**/*",
-    "package.json",
-    "src/contracts/redstone-oracle-registry/initial-state.json"
-  ]
-}
