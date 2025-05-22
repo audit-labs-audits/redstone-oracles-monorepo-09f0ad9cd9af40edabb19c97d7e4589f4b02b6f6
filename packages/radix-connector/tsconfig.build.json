@@ -1,0 +1,24 @@
+{
+  "extends": "./tsconfig.json",
+  "exclude": [
+    "node_modules",
+    "dist",
+    "test",
+    "coverage",
+    "analysis",
+    "**/*spec.ts",
+    "jest.config.ts",
+    "scrypto"
+  ],
+  "references": [
+    {
+      "path": "../sdk/tsconfig.build.json"
+    },
+    {
+      "path": "../utils/tsconfig.build.json"
+    },
+    {
+      "path": "../oracles-smartweave-contracts/tsconfig.build.json"
+    }
+  ]
+}

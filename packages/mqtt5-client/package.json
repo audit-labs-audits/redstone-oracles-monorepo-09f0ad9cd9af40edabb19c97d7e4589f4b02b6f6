@@ -1,0 +1,28 @@
+{
+  "name": "@redstone-finance/mqtt5-client",
+  "version": "0.8.0",
+  "main": "dist/src/index.js",
+  "exports": "./dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "yarn global:tsc --build tsconfig.build.json",
+    "build-dev": "yarn global:tsc --build tsconfig.json",
+    "preversion": "yarn build",
+    "test": "yarn global:jest",
+    "lint": "yarn global:eslint .",
+    "lint:fix": "yarn global:eslint --fix ."
+  },
+  "dependencies": {
+    "@redstone-finance/protocol": "0.8.0",
+    "@redstone-finance/sdk": "0.8.0",
+    "@redstone-finance/utils": "0.8.0",
+    "async-mutex": "^0.5.0",
+    "aws-iot-device-sdk-v2": "^1.21.1",
+    "lodash": "^4.17.21"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

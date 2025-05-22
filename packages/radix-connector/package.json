@@ -1,0 +1,53 @@
+{
+  "name": "@redstone-finance/radix-connector",
+  "version": "0.8.0",
+  "main": "dist/src/index.js",
+  "exports": "./dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "yarn global:tsc --build tsconfig.build.json",
+    "build-dev": "yarn global:tsc --build tsconfig.json",
+    "preversion": "yarn build",
+    "pack-package": "yarn build && npm pack",
+    "lint": "yarn global:eslint .",
+    "lint:fix": "yarn global:eslint --fix .",
+    "test-ci": "IS_CI=true yarn global:jest",
+    "test": "yarn global:jest",
+    "test-e2e": "yarn global:jest e2e.spec.ts",
+    "coverage": "yarn global:jest:cov --coveragePathIgnorePatterns=\"src/index.ts\" --coveragePathIgnorePatterns=\"src/radix/parser/generated/converter.ts\"",
+    "sample-deploy_price_adapter": "make -C scrypto build-price_adapter && CONTRACT_NAME=price_adapter yarn global:ts-node scripts/sample_deploy.ts",
+    "sample-deploy_multi_feed_price_adapter": "make -C scrypto build-multi_feed_price_adapter && CONTRACT_NAME=multi_feed_price_adapter yarn global:ts-node scripts/sample_deploy.ts",
+    "sample-deploy-price_feed": "make -C scrypto build-price_feed && CONTRACT_NAME=price_feed yarn global:ts-node scripts/sample_deploy.ts",
+    "sample-deploy-proxy": "make -C scrypto build-proxy && CONTRACT_NAME=proxy yarn global:ts-node scripts/sample_deploy.ts",
+    "sample-deploy-badge_creator": "make -C scrypto build-badge_creator  && CONTRACT_NAME=badge_creator yarn global:ts-node scripts/sample_deploy.ts",
+    "sample-instantiate-price_adapter": "yarn global:ts-node scripts/sample_instantiate_price_adapter.ts",
+    "sample-instantiate-multi_feed_price_adapter": "yarn global:ts-node scripts/sample_instantiate_multi_feed_price_adapter.ts",
+    "sample-instantiate-price_feed": "yarn global:ts-node scripts/sample_instantiate_price_feed.ts",
+    "sample-instantiate-proxy": "yarn global:ts-node scripts/sample_instantiate_proxy.ts",
+    "sample-create_badges": "yarn global:ts-node scripts/sample_create_badges.ts",
+    "sample-change_proxy_address": "yarn global:ts-node scripts/sample_change_proxy_address.ts",
+    "sample-run": "yarn global:ts-node scripts/sample_run.ts"
+  },
+  "dependencies": {
+    "@radixdlt/babylon-gateway-api-sdk": "^1.9.2",
+    "@radixdlt/radix-engine-toolkit": "^1.0.5",
+    "@redstone-finance/sdk": "0.8.0",
+    "axios": "^1.7.9",
+    "ethers": "^5.7.2",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@atlantis-l/radix-tool": "^0.8.9",
+    "node-jq": "^4.2.2",
+    "redstone-api": "^0.4.12",
+    "zod": "^3.22.4"
+  },
+  "files": [
+    "dist/src/**/*"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
