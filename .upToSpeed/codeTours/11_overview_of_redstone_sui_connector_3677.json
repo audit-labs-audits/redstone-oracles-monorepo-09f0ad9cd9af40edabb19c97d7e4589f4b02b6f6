@@ -1,0 +1,175 @@
+{
+  "title": "1.1: Overview of RedStone Sui Connector",
+  "id": "jz/fu3YQ2/11KKOvLU2HIjs+uuZIztRVeTOpGOjg5Fc=",
+  "originalId": 3677,
+  "position": 1,
+  "steps": [
+    {
+      "type": "highlight",
+      "description": "At the root of this monorepo you see all RedStone packages side by side. Notice **evm-connector** and **sdk**, illustrating that our **Sui connector** lives alongside other blockchain connectors in the ecosystem.",
+      "file": "README.md",
+      "highlight": [
+        {
+          "start": 17,
+          "end": 25
+        }
+      ],
+      "title": "",
+      "id": "43393"
+    },
+    {
+      "type": "highlight",
+      "description": "Use `yarn deploy` to publish the `Move packages`, bootstrap the `PriceAdapter`, and generate an `object_ids.[NETWORK].json` file for later scripts.",
+      "file": "packages/sui-connector/README.md",
+      "highlight": [
+        {
+          "start": 10,
+          "end": 12
+        }
+      ],
+      "title": "",
+      "id": "43394"
+    },
+    {
+      "type": "highlight",
+      "description": "Run `yarn test` for unit tests, or `yarn sample-run` to exercise the full end-to-end flow locally (or against a live network).",
+      "file": "packages/sui-connector/README.md",
+      "highlight": [
+        {
+          "start": 23,
+          "end": 28
+        }
+      ],
+      "title": "",
+      "id": "43395"
+    },
+    {
+      "type": "textOnly",
+      "description": "Inside `packages/sui-connector` you’ll work in three areas:\n\n* `src/` - TypeScript SDK code\n* `scripts/` - CLI helpers (deploy, upgrades, demos)\n* `sui/contracts/` - On-chain Move packages",
+      "title": "",
+      "id": "43396"
+    },
+    {
+      "type": "highlight",
+      "description": "The `SDK` entrypoint centralizes exports for everything you need:\n\n- Config & serializers\n- Client builder\n- Core connector & utilities\n- `Price-adapter` adapters, readers, writers, and transaction delivery",
+      "file": "packages/sui-connector/src/index.ts",
+      "highlight": [
+        {
+          "start": 1,
+          "end": 12
+        }
+      ],
+      "title": "",
+      "id": "43397"
+    },
+    {
+      "type": "highlight",
+      "description": "The `PriceAdapterConfig` type encodes your on-chain safety parameters:\n\n- Who can sign and how many signatures are required\n- Bounds on data timestamps\n- Trusted updaters and update intervals\n- Gas budget for the initialization transaction",
+      "file": "packages/sui-connector/src/PriceAdapterConfig.ts",
+      "highlight": [
+        {
+          "start": 1,
+          "end": 9
+        }
+      ],
+      "title": "",
+      "id": "43398"
+    },
+    {
+      "type": "highlight",
+      "description": "`SuiClientBuilder` provides a fluent API for endpoint configuration:\n\n* `.withNetwork(network)` sets the chain\n* `.withRpcUrls(urls)` or `.withFullnodeUrl()` adds endpoints\n* `.build()` assembles either a single or multi-endpoint client with consensus timeouts",
+      "file": "packages/sui-connector/src/SuiClientBuilder.ts",
+      "highlight": [
+        {
+          "start": 45,
+          "end": 57
+        }
+      ],
+      "title": "",
+      "id": "43399"
+    },
+    {
+      "type": "highlight",
+      "description": "`SuiContractConnector` is the shared base:\n\n- A stub `getAdapter()` for subclasses\n- `getBlockNumber()` via checkpoint consensus\n- `getNormalizedBalance()` converts **SUI coins** to 18-decimals",
+      "file": "packages/sui-connector/src/SuiContractConnector.ts",
+      "highlight": [
+        {
+          "start": 15,
+          "end": 29
+        }
+      ],
+      "title": "",
+      "id": "43400"
+    },
+    {
+      "type": "highlight",
+      "description": "The **price connector** wires your client, on-chain config, and keypair into the `SuiPricesContractAdapter`, lazily caching it per instance.",
+      "file": "packages/sui-connector/src/SuiPricesContractConnector.ts",
+      "highlight": [
+        {
+          "start": 9,
+          "end": 17
+        }
+      ],
+      "title": "",
+      "id": "43401"
+    },
+    {
+      "type": "highlight",
+      "description": "The `sample-run.ts` orchestrates an end-to-end price write:\n\n1. Fetch signed data packages via `RedStone SDK`  \n2. Build a `Sui client` and `connector`  \n3. Call `sampleRun(...)` which serializes, assembles, and sends the transaction  \n4. Observe the on-chain `PriceAdapter` storing fresh prices",
+      "file": "packages/sui-connector/scripts/sample-run.ts",
+      "highlight": [
+        {
+          "start": 24,
+          "end": 46
+        }
+      ],
+      "title": "",
+      "id": "43402"
+    },
+    {
+      "type": "textOnly",
+      "description": "Under `sui/contracts/` you see two separate Move packages:\n\n* **price_adapter** — the core oracle adapter that verifies and writes price payloads\n* **price_feed** — a minimal consumer contract reading the shared data object",
+      "title": "",
+      "id": "43403"
+    },
+    {
+      "type": "highlight",
+      "description": "`redstone_price_adapter` defines the core oracle package:\n\n- Package name & version\n- Sui framework dependency\n- Modules in `sources/`: `admin.move`, `main.move`, `price_adapter.move`, `price_data.move`",
+      "file": "packages/sui-connector/sui/contracts/price_adapter/Move.toml",
+      "highlight": [
+        {
+          "start": 1,
+          "end": 10
+        }
+      ],
+      "title": "",
+      "id": "43404"
+    },
+    {
+      "type": "highlight",
+      "description": "The `price_feed` package depends on `redstone_price_adapter` and provides a single `price_feed.move` module to read persisted data.",
+      "file": "packages/sui-connector/sui/contracts/price_feed/Move.toml",
+      "highlight": [
+        {
+          "start": 1,
+          "end": 10
+        }
+      ],
+      "title": "",
+      "id": "43405"
+    },
+    {
+      "type": "textOnly",
+      "description": "| Off-Chain Flow                                    | On-Chain Flow                                      |\n|-------------------------------------------------|---------------------------------------------------|\n| 1. Fetch signed packages via RedStone SDK        | 1. Call `initialize_price_adapter` with AdminCap  |\n| 2. BCS-serialize payload and build transaction   | 2. `write_price` → `process_payload` verifies, writes |\n| 3. Send via `SuiTxDeliveryMan`                    | 3. Global `Table<feed_id, PriceData>` updated     |\n| 4. Read via SDK reader or Move view functions    | 4. Consumers invoke `price` / `timestamp` / `price_data` |",
+      "title": "",
+      "id": "43406"
+    },
+    {
+      "type": "textOnly",
+      "description": "Future deep dives:\n\n**2.1** `price_adapter_contract` Overview  \n**2.2** Admin Module deep dive  \n**2.3** Price Data Module deep dive  \n**2.4** Initialization Entry Points  \n**2.5** Core Price Adapter Logic  \n**2.6** E2E Testing Scenarios  \n**3.1** `price_feed` consumer contract  \n**4.1** Off-Chain SDK Overview  \n**4.2** `SuiClientBuilder`  \n**4.3** `SuiContractConnector` & Utilities  \n**4.4** `SuiPricesContractConnector` & Adapter  \n**4.5** `SuiPricesContractReader`  \n**4.6** `SuiPricesContractWriter` & `Tx` Delivery  \n**4.7** Configuration & Network Identifiers",
+      "title": "",
+      "id": "43407"
+    }
+  ]
+}

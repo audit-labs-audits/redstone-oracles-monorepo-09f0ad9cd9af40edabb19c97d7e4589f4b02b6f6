@@ -1,0 +1,97 @@
+{
+  "title": "3.1: `price_feed` contract",
+  "id": "HVo7VEL6qeYURo4/kJx4+zKmhc7bgvvx/LtmR2j05bg=",
+  "originalId": 3681,
+  "position": 8,
+  "steps": [
+    {
+      "type": "textOnly",
+      "description": "This tour will walk you through the `price_feed.move` contract. This contract is a simple example of how to consume price data from the `PriceAdapter` contract. The main purpose of this contract is to read the price of ETH.",
+      "title": "",
+      "id": "43288"
+    },
+    {
+      "type": "revealFiles",
+      "files": [
+        "packages/sui-connector/sui/contracts/price_feed/sources/price_feed.move"
+      ],
+      "description": "Here is the entire `price_feed.move` contract. It's a simple contract, so we'll go through it section by section to understand its functionality.",
+      "title": "",
+      "id": "43289"
+    },
+    {
+      "type": "highlight",
+      "description": "Lines 5-7 show the `use` statements. This contract imports `PriceAdapter` and `PriceData` from the `redstone_price_adapter` package. These are the core components for fetching and storing prices. It also uses the `String` module from the standard library.",
+      "file": "packages/sui-connector/sui/contracts/price_feed/sources/price_feed.move",
+      "highlight": [
+        {
+          "start": 5,
+          "end": 7
+        }
+      ],
+      "title": "",
+      "id": "43290"
+    },
+    {
+      "type": "highlight",
+      "description": "Line 12 defines the `FEED_ID` constant. This is the identifier for the Ethereum price feed. The `x\"...\"` syntax is used to define a hexadecimal byte string in Move. This ID is used to query the `PriceAdapter` for the price of ETH.",
+      "file": "packages/sui-connector/sui/contracts/price_feed/sources/price_feed.move",
+      "highlight": [
+        {
+          "start": 12,
+          "end": 12
+        }
+      ],
+      "title": "",
+      "id": "43291"
+    },
+    {
+      "type": "highlight",
+      "description": "Lines 17-30 define metadata functions: `get_data_feed_id`, `description`, and `decimals`. These are simple view functions that provide information about the price feed, such as its ID, a description, and the number of decimals for the price data.",
+      "file": "packages/sui-connector/sui/contracts/price_feed/sources/price_feed.move",
+      "highlight": [
+        {
+          "start": 17,
+          "end": 30
+        }
+      ],
+      "title": "",
+      "id": "43292"
+    },
+    {
+      "type": "highlight",
+      "description": "The `read_price_data` function on lines 43-45 is the primary function for fetching data. It takes a reference to a `PriceAdapter` object and uses the `FEED_ID` to retrieve the corresponding `PriceData` struct. This is the core logic of the contract.",
+      "file": "packages/sui-connector/sui/contracts/price_feed/sources/price_feed.move",
+      "highlight": [
+        {
+          "start": 43,
+          "end": 45
+        }
+      ],
+      "title": "",
+      "id": "43293"
+    },
+    {
+      "type": "highlight",
+      "description": "The `price_and_timestamp` and `read_price` functions on lines 33-40 are convenience functions. They call `read_price_data` and then extract specific fields (`price` and `timestamp`) from the returned `PriceData` object. This shows how a consumer contract can build simpler abstractions on top of the generic `price_adapter`.",
+      "file": "packages/sui-connector/sui/contracts/price_feed/sources/price_feed.move",
+      "highlight": [
+        {
+          "start": 33,
+          "end": 40
+        }
+      ],
+      "title": "",
+      "id": "43294"
+    },
+    {
+      "type": "revealFiles",
+      "files": [
+        "packages/sui-connector/sui/contracts/price_feed/Move.toml"
+      ],
+      "description": "Finally, let's look at the `Move.toml` file for this contract. Line 10 shows the dependency on `redstone_price_adapter`. This is what links this consumer contract to the core price adapter logic, allowing it to use the `PriceAdapter` and `PriceData` types.",
+      "title": "",
+      "id": "43295"
+    }
+  ]
+}

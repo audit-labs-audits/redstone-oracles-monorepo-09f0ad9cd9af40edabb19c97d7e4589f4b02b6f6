@@ -1,0 +1,33 @@
+{
+  "packageName": "redstone-sui-connector",
+  "packageVersion": 1,
+  "hash": "de332fc6bd430e9e4b5f33c170163379b2e3995a",
+  "numberOfTours": 4,
+  "titleOfTours": [
+    "1.1: Overview of RedStone Sui Connector",
+    "2.1: price_adapter_contract: Overview",
+    "3.1: `price_feed` contract",
+    "4.1 Want to learn more?"
+  ],
+  "totalNumberOfSteps": 35,
+  "filesCovered": [
+    "README.md",
+    "packages/sui-connector/README.md",
+    "packages/sui-connector/src/index.ts",
+    "packages/sui-connector/src/PriceAdapterConfig.ts",
+    "packages/sui-connector/src/SuiClientBuilder.ts",
+    "packages/sui-connector/src/SuiContractConnector.ts",
+    "packages/sui-connector/src/SuiPricesContractConnector.ts",
+    "packages/sui-connector/scripts/sample-run.ts",
+    "packages/sui-connector/sui/contracts/price_adapter/Move.toml",
+    "packages/sui-connector/sui/contracts/price_feed/Move.toml",
+    "packages/sui-connector/sui/contracts/price_adapter/README.md",
+    "packages/sui-connector/sui/contracts/price_adapter/sources/admin.move",
+    "packages/sui-connector/sui/contracts/price_adapter/sources/price_data.move",
+    "packages/sui-connector/sui/contracts/price_adapter/sources/price_adapter.move",
+    "packages/sui-connector/sui/contracts/price_adapter/sources/main.move",
+    "packages/sui-connector/sui/contracts/price_adapter/tests/price_adapter_tests.move",
+    "packages/sui-connector/sui/contracts/price_feed/sources/price_feed.move"
+  ],
+  "numberOfFilesCovered": 17
+}

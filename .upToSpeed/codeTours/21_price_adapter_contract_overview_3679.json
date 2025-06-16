@@ -1,0 +1,137 @@
+{
+  "title": "2.1: price_adapter_contract: Overview",
+  "id": "LNU43E6xe0cfjU/1VgQE0FJe9jFftXFG3na9E6ZL/NA=",
+  "originalId": 3679,
+  "position": 2,
+  "steps": [
+    {
+      "type": "highlight",
+      "description": "This `Move.toml` file is the package manifest, similar to a `package.json` or `Cargo.toml`.\n\n- **`[package]`**: Defines the package name (`redstone_price_adapter`) and version.\n- **`[dependencies]`**: Imports the Sui framework, providing access to core on-chain functionalities.\n- **`[addresses]`**: Declares a named address (`redstone_price_adapter`) as a placeholder for its deployment address.",
+      "file": "packages/sui-connector/sui/contracts/price_adapter/Move.toml",
+      "highlight": [
+        {
+          "start": 1,
+          "end": 12
+        }
+      ],
+      "title": "",
+      "id": "43372"
+    },
+    {
+      "type": "highlight",
+      "description": "The `Move.toml` defines:  \n- Package name `redstone_price_adapter` (line 2), version `1.0.0` (line 6)  \n- Dependency on the Sui framework (line 9)  \n- Address mapping for this package (line 12)",
+      "file": "packages/sui-connector/sui/contracts/price_adapter/Move.toml",
+      "highlight": [
+        {
+          "start": 1,
+          "end": 12
+        }
+      ],
+      "title": "",
+      "id": "43373"
+    },
+    {
+      "type": "highlight",
+      "description": "Under the “📄 Contracts” section, the README’s TOC lists the `PriceAdapter` module and its API entrypoints: `initializer`, `write_price`, `price`, `timestamp`, `price_and_timestamp`, and `price_data`.",
+      "file": "packages/sui-connector/sui/contracts/price_adapter/README.md",
+      "highlight": [
+        {
+          "start": 7,
+          "end": 14
+        }
+      ],
+      "title": "",
+      "id": "43375"
+    },
+    {
+      "type": "textOnly",
+      "description": "While the README focuses on the **PriceAdapter** module’s API, the **`sources/`** folder implements four Move modules:\n\n- `admin.move` – `administrationCapability` and test-only helpers\n- `price_data.move` – `PriceData` struct holding feed state\n- `price_adapter.move` – core adapter logic, off-chain payload handling, storage table\n- `main.move` – public initializer wiring `AdminCap` to creation of the adapter",
+      "title": "",
+      "id": "43376"
+    },
+    {
+      "type": "highlight",
+      "description": "`admin.move` declares the `admin` module and the `AdminCap` resource, plus test-only helpers `admin_cap` and `consume_cap` used to grant and revoke admin privileges.",
+      "file": "packages/sui-connector/sui/contracts/price_adapter/sources/admin.move",
+      "highlight": [
+        {
+          "start": 3,
+          "end": 9
+        }
+      ],
+      "title": "",
+      "id": "43377"
+    },
+    {
+      "type": "highlight",
+      "description": "`price_data.move` defines `struct PriceData { feed_id, value, timestamp, write_timestamp }`, plus view functions (`price`, `timestamp`, etc.) and an internal `update` to mutate the struct.",
+      "file": "packages/sui-connector/sui/contracts/price_adapter/sources/price_data.move",
+      "highlight": [
+        {
+          "start": 7,
+          "end": 12
+        }
+      ],
+      "title": "",
+      "id": "43378"
+    },
+    {
+      "type": "highlight",
+      "description": "**`price_adapter.move` is the heart of the contract**: it imports `Config` from `redstone_sdk_config` (signer sets & timing rules) and `process_payload` from `redstone_sdk_payload` (verifies/parses data), defines `struct PriceAdapter` with a `Table<feed_id, PriceData>`, the `write_price` mutator, public-view accessors, and admin/config update functions.",
+      "file": "packages/sui-connector/sui/contracts/price_adapter/sources/price_adapter.move",
+      "highlight": [
+        {
+          "start": 3,
+          "end": 13
+        }
+      ],
+      "title": "",
+      "id": "43379"
+    },
+    {
+      "type": "highlight",
+      "description": "`main.move` exposes `initialize_price_adapter`, which consumes an `AdminCap` and invokes `price_adapter::new` to create and share a `PriceAdapter` object with the given signers and thresholds.",
+      "file": "packages/sui-connector/sui/contracts/price_adapter/sources/main.move",
+      "highlight": [
+        {
+          "start": 3,
+          "end": 11
+        }
+      ],
+      "title": "",
+      "id": "43380"
+    },
+    {
+      "type": "highlight",
+      "description": "`e2e_as_trusted` (lines 39–44) exercises a full scenario with a trusted updater: initialize → `write_price` → `price_and_timestamp` → assert the on-chain price matches the payload.",
+      "file": "packages/sui-connector/sui/contracts/price_adapter/tests/price_adapter_tests.move",
+      "highlight": [
+        {
+          "start": 38,
+          "end": 44
+        }
+      ],
+      "title": "",
+      "id": "43381"
+    },
+    {
+      "type": "highlight",
+      "description": "`e2e_as_non_trusted` (lines 57–63) runs the same flow without any trusted updaters, demonstrating that unauthorized writes are rejected.",
+      "file": "packages/sui-connector/sui/contracts/price_adapter/tests/price_adapter_tests.move",
+      "highlight": [
+        {
+          "start": 56,
+          "end": 63
+        }
+      ],
+      "title": "",
+      "id": "43382"
+    },
+    {
+      "type": "textOnly",
+      "description": "This concludes our walkthrough of **price_adapter_contract**: you’ve seen its folder structure, package metadata, README summary and API TOC, the four core Move modules under `sources/`, and the end-to-end tests covering trusted and non-trusted scenarios.",
+      "title": "",
+      "id": "43383"
+    }
+  ]
+}
